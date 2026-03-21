@@ -1,11 +1,6 @@
-# ⚡ CronEase API
+# CronEase API
 
 > Convert plain English to cron expressions and back. Validate cron syntax. Predict next run times. All in one simple API.
-
-[![License: MIT](https://img.shields.io/badge/License-MIT-green.svg)](https://opensource.org/licenses/MIT)
-[![TypeScript](https://img.shields.io/badge/TypeScript-5.0-blue.svg)](https://www.typescriptlang.org/)
-[![Next.js](https://img.shields.io/badge/Next.js-15-black.svg)](https://nextjs.org/)
-[![Powered by Groq](https://img.shields.io/badge/AI-Groq%20Llama%203.3-orange.svg)](https://groq.com/)
 
 ---
 
@@ -185,19 +180,12 @@ Available on [RapidAPI](#) *(link coming soon)*
 
 ---
 
-## 🔒 Security Note
-
-Never commit your `.env.local` file. Add it to `.gitignore` (already done by Next.js by default).
-
----
-
 ## 👤 Author
 
 **Natnael Demelash**
 React Developer & n8n Automation Specialist
 
 - Upwork: [View Profile](https://www.upwork.com/freelancers/~01ddf1eafb3a557e61)
-- GitHub: [@YOUR_GITHUB_USERNAME](https://github.com/YOUR_GITHUB_USERNAME)
 
 ---
 
