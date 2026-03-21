@@ -1,36 +1,206 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# ⚡ CronEase API
 
-## Getting Started
+> Convert plain English to cron expressions and back. Validate cron syntax. Predict next run times. All in one simple API.
 
-First, run the development server:
+[![License: MIT](https://img.shields.io/badge/License-MIT-green.svg)](https://opensource.org/licenses/MIT)
+[![TypeScript](https://img.shields.io/badge/TypeScript-5.0-blue.svg)](https://www.typescriptlang.org/)
+[![Next.js](https://img.shields.io/badge/Next.js-15-black.svg)](https://nextjs.org/)
+[![Powered by Groq](https://img.shields.io/badge/AI-Groq%20Llama%203.3-orange.svg)](https://groq.com/)
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
+---
+
+## 🚀 What It Does
+
+Developers waste time writing and decoding cron expressions. CronEase API solves this with 4 simple endpoints:
+
+| Endpoint | Input | Output |
+|----------|-------|--------|
+| `POST /api/to-cron` | `"every Monday at 9am"` | `0 9 * * 1` |
+| `POST /api/to-english` | `0 9 * * 1` | `"At 09:00 on Monday"` |
+| `POST /api/validate` | `0 9 * * 1` | `{ valid: true }` |
+| `POST /api/next-runs` | `0 9 * * 1` | Next 5 run times |
+
+---
+
+## 📦 Tech Stack
+
+- **Framework:** Next.js 15 + TypeScript
+- **AI:** Groq API (Llama 3.3) — for plain English parsing
+- **Cron Logic:** `cronstrue` + `cron-parser`
+- **Rate Limiting:** Upstash Redis
+- **Hosting:** Vercel
+- **Distribution:** RapidAPI
+
+---
+
+## 🔧 API Reference
+
+### POST /api/to-cron
+Convert plain English to a cron expression.
+
+**Request:**
+```json
+{
+  "text": "every weekday at 9am"
+}
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+**Response:**
+```json
+{
+  "cron": "0 9 * * 1-5",
+  "description": "At 09:00, Monday through Friday",
+  "valid": true
+}
+```
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+---
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+### POST /api/to-english
+Convert a cron expression to plain English.
 
-## Learn More
+**Request:**
+```json
+{
+  "cron": "0 9 * * 1-5"
+}
+```
 
-To learn more about Next.js, take a look at the following resources:
+**Response:**
+```json
+{
+  "cron": "0 9 * * 1-5",
+  "description": "At 09:00, Monday through Friday"
+}
+```
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+---
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+### POST /api/validate
+Validate a cron expression.
 
-## Deploy on Vercel
+**Request:**
+```json
+{
+  "cron": "0 9 * * 1-5"
+}
+```
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+**Response:**
+```json
+{
+  "cron": "0 9 * * 1-5",
+  "valid": true,
+  "description": "At 09:00, Monday through Friday"
+}
+```
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+---
+
+### POST /api/next-runs
+Get the next N run times for a cron expression.
+
+**Request:**
+```json
+{
+  "cron": "0 9 * * 1-5",
+  "count": 3
+}
+```
+
+**Response:**
+```json
+{
+  "cron": "0 9 * * 1-5",
+  "nextRuns": [
+    "2026-03-23T09:00:00.000Z",
+    "2026-03-24T09:00:00.000Z",
+    "2026-03-25T09:00:00.000Z"
+  ]
+}
+```
+
+---
+
+## 🛠 Local Development
+
+### Prerequisites
+- Node.js 18+
+- A free [Groq API key](https://console.groq.com)
+- A free [Upstash Redis](https://upstash.com) instance
+
+### Setup
+```bash
+# Clone the repo
+git clone https://github.com/YOUR_USERNAME/cronease-api.git
+cd cronease-api
+
+# Install dependencies
+npm install
+
+# Set up environment variables
+cp .env.example .env.local
+# Add your GROQ_API_KEY and UPSTASH credentials
+
+# Run the development server
+npm run dev
+```
+
+The API will be available at `http://localhost:3000`
+
+---
+
+## ⚙️ Environment Variables
+
+Create a `.env.local` file with the following:
+```env
+GROQ_API_KEY=your_groq_api_key_here
+UPSTASH_REDIS_REST_URL=your_upstash_url_here
+UPSTASH_REDIS_REST_TOKEN=your_upstash_token_here
+```
+
+---
+
+## 🌐 Deployment
+
+This API is designed to deploy on Vercel in one click:
+
+1. Fork this repo
+2. Connect to [Vercel](https://vercel.com)
+3. Add your environment variables
+4. Deploy
+
+---
+
+## 📊 Rate Limits
+
+| Plan | Requests/month | Price |
+|------|---------------|-------|
+| Free | 50 | $0 |
+| Basic | 1,000 | $9/mo |
+| Pro | 10,000 | $29/mo |
+| Ultra | 100,000 | $79/mo |
+
+Available on [RapidAPI](#) *(link coming soon)*
+
+---
+
+## 🔒 Security Note
+
+Never commit your `.env.local` file. Add it to `.gitignore` (already done by Next.js by default).
+
+---
+
+## 👤 Author
+
+**Natnael Demelash**
+React Developer & n8n Automation Specialist
+
+- Upwork: [View Profile](https://www.upwork.com/freelancers/~01ddf1eafb3a557e61)
+- GitHub: [@YOUR_GITHUB_USERNAME](https://github.com/YOUR_GITHUB_USERNAME)
+
+---
+
+## 📄 License
+
+MIT License — feel free to use this project as a reference.
