@@ -8,18 +8,18 @@
 
 Developers waste time writing and decoding cron expressions. CronEase API solves this with 4 simple endpoints:
 
-| Endpoint | Input | Output |
-|----------|-------|--------|
-| `POST /api/to-cron` | `"every Monday at 9am"` | `0 9 * * 1` |
-| `POST /api/to-english` | `0 9 * * 1` | `"At 09:00 on Monday"` |
-| `POST /api/validate` | `0 9 * * 1` | `{ valid: true }` |
-| `POST /api/next-runs` | `0 9 * * 1` | Next 5 run times |
+| Endpoint               | Input                   | Output                 |
+| ---------------------- | ----------------------- | ---------------------- |
+| `POST /api/to-cron`    | `"every Monday at 9am"` | `0 9 * * 1`            |
+| `POST /api/to-english` | `0 9 * * 1`             | `"At 09:00 on Monday"` |
+| `POST /api/validate`   | `0 9 * * 1`             | `{ valid: true }`      |
+| `POST /api/next-runs`  | `0 9 * * 1`             | Next 5 run times       |
 
 ---
 
 ## 📦 Tech Stack
 
-- **Framework:** Next.js 15 + TypeScript
+- **Framework:** Next.js 16 + TypeScript
 - **AI:** Groq API (Llama 3.3) — for plain English parsing
 - **Cron Logic:** `cronstrue` + `cron-parser`
 - **Rate Limiting:** Upstash Redis
@@ -31,9 +31,11 @@ Developers waste time writing and decoding cron expressions. CronEase API solves
 ## 🔧 API Reference
 
 ### POST /api/to-cron
+
 Convert plain English to a cron expression.
 
 **Request:**
+
 ```json
 {
   "text": "every weekday at 9am"
@@ -41,6 +43,7 @@ Convert plain English to a cron expression.
 ```
 
 **Response:**
+
 ```json
 {
   "cron": "0 9 * * 1-5",
@@ -52,9 +55,11 @@ Convert plain English to a cron expression.
 ---
 
 ### POST /api/to-english
+
 Convert a cron expression to plain English.
 
 **Request:**
+
 ```json
 {
   "cron": "0 9 * * 1-5"
@@ -62,6 +67,7 @@ Convert a cron expression to plain English.
 ```
 
 **Response:**
+
 ```json
 {
   "cron": "0 9 * * 1-5",
@@ -72,9 +78,11 @@ Convert a cron expression to plain English.
 ---
 
 ### POST /api/validate
+
 Validate a cron expression.
 
 **Request:**
+
 ```json
 {
   "cron": "0 9 * * 1-5"
@@ -82,6 +90,7 @@ Validate a cron expression.
 ```
 
 **Response:**
+
 ```json
 {
   "cron": "0 9 * * 1-5",
@@ -93,9 +102,11 @@ Validate a cron expression.
 ---
 
 ### POST /api/next-runs
+
 Get the next N run times for a cron expression.
 
 **Request:**
+
 ```json
 {
   "cron": "0 9 * * 1-5",
@@ -104,6 +115,7 @@ Get the next N run times for a cron expression.
 ```
 
 **Response:**
+
 ```json
 {
   "cron": "0 9 * * 1-5",
@@ -120,11 +132,13 @@ Get the next N run times for a cron expression.
 ## 🛠 Local Development
 
 ### Prerequisites
+
 - Node.js 18+
 - A free [Groq API key](https://console.groq.com)
 - A free [Upstash Redis](https://upstash.com) instance
 
 ### Setup
+
 ```bash
 # Clone the repo
 git clone https://github.com/YOUR_USERNAME/cronease-api.git
@@ -148,6 +162,7 @@ The API will be available at `http://localhost:3000`
 ## ⚙️ Environment Variables
 
 Create a `.env.local` file with the following:
+
 ```env
 GROQ_API_KEY=your_groq_api_key_here
 UPSTASH_REDIS_REST_URL=your_upstash_url_here
@@ -156,27 +171,16 @@ UPSTASH_REDIS_REST_TOKEN=your_upstash_token_here
 
 ---
 
-## 🌐 Deployment
-
-This API is designed to deploy on Vercel in one click:
-
-1. Fork this repo
-2. Connect to [Vercel](https://vercel.com)
-3. Add your environment variables
-4. Deploy
-
----
-
 ## 📊 Rate Limits
 
-| Plan | Requests/month | Price |
-|------|---------------|-------|
-| Free | 50 | $0 |
-| Basic | 1,000 | $9/mo |
-| Pro | 10,000 | $29/mo |
-| Ultra | 100,000 | $79/mo |
+| Plan  | Requests/month | Price  |
+| ----- | -------------- | ------ |
+| Free  | 50             | $0     |
+| Basic | 1,000          | $9/mo  |
+| Pro   | 10,000         | $29/mo |
+| Ultra | 100,000        | $79/mo |
 
-Available on [RapidAPI](#) *(link coming soon)*
+Available on [RapidAPI](#) _(link coming soon)_
 
 ---
 
@@ -188,7 +192,3 @@ React Developer & n8n Automation Specialist
 - Upwork: [View Profile](https://www.upwork.com/freelancers/~01ddf1eafb3a557e61)
 
 ---
-
-## 📄 License
-
-MIT License — feel free to use this project as a reference.
